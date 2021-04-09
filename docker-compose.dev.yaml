@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  api_clima_tempo:
+    container_name: api_clima_tempo
+    build: .
+    image: api_clima_tempo:0.0.1
+    command: gunicorn -w 3 -b :8000 -k uvicorn.workers.UvicornWorker -t 90 --preload --max-requests=500 --reload api_clima_tempo:app
+    environment: []
+    ports: []
+    volumes:
+      - ./:/deploy
+    depends_on: []
+    networks: []
+
+volumes: []
+
+networks: []

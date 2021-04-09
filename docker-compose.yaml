@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  api_clima_tempo:
+    container_name: api_clima_tempo
+    restart: always
+    build: .
+    image: api_clima_tempo:0.0.1
+    environment: []
+    ports: []
