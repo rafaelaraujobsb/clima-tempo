@@ -22,6 +22,11 @@ Acesse o README de cada serviço para verificar quais as variáveis são necess�
 docker-compose -f docker-compose.dev.yaml up
 ```
 
+Após a inicialização dos containers os seguinte serviços poderão ser acessados:
+- [API](http://localhost:9080/swagger)
+- [RabbitMQ](http://localhost:8080)
+    - `climatempo` é a senha e usuário
+
 ## 🧔 Responsável pelo projeto
 <p><a href="mailto:bsb.rafaelaraujo@gmail.com.br">Rafael Araujo</a></p>
 <div align="center"><img width="500" alt="Logo" src="https://s3.amazonaws.com/sample-login/companies/avatars/000/003/383/original/gaivota_logo_oficial.png?1541450807"></div>
