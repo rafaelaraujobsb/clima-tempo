@@ -7,15 +7,16 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 import urllib3
 
-from .config import envs
-from .exceptions.error_handler import carregar_exception_api
-from .rotas import rota_v1
+from api_clima_tempo.config import envs
+from api_clima_tempo.exceptions.error_handler import carregar_exception_api
+from api_clima_tempo.modulos.inicio_base import carregar_base, criar_indexes
+from api_clima_tempo.rotas import rota_v1
 
 
 urllib3.disable_warnings()
 
 # Versão
-__version__ = "0.0.0"
+__version__ = "0.4.0"
 
 # Logger Requisição
 logger.level("REQUEST RECEBIDA", no=21, color="<white>")
@@ -47,6 +48,10 @@ app.include_router(rota_v1, prefix="/v1")
 
 # Exceções API
 carregar_exception_api(app)
+
+# Inicio Base
+carregar_base()
+criar_indexes()
 
 
 @app.middleware("http")

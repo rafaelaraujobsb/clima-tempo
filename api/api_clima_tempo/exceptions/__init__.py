@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 
 
-class ApiApiClimaTempo(HTTPException):
+class ApiClimaTempo(HTTPException):
     """ Classe Base """
 
     def __init__(self, status_code: int, mensagem: str, stacktrace: str = ""):
@@ -16,26 +16,31 @@ class ApiApiClimaTempo(HTTPException):
         return self.mensagem
 
 
-class DadoInvalido(ApiApiClimaTempo):
+class DadoInvalido(ApiClimaTempo):
     def __init__(self, mensagem: str = "Dado inválido!", stacktrace: str = ""):
         super().__init__(status_code=406, mensagem=mensagem, stacktrace=stacktrace)
 
 
-class RegistroJaInserido(ApiApiClimaTempo):
+class MensagemStatusCode(ApiClimaTempo):
+    def __init__(self, status_code: int, mensagem: str, stacktrace: str = ""):
+        super().__init__(status_code=status_code, mensagem=mensagem, stacktrace=stacktrace)
+
+
+class RegistroJaInserido(ApiClimaTempo):
     def __init__(self, mensagem: str = "Registro já inserido!", stacktrace: str = ""):
         super().__init__(status_code=409, mensagem=mensagem, stacktrace=stacktrace)
 
 
-class RegistroNaoEncontrado(ApiApiClimaTempo):
+class RegistroNaoEncontrado(ApiClimaTempo):
     def __init__(self, mensagem: str = "Registro não encontrado!", stacktrace: str = ""):
         super().__init__(status_code=404, mensagem=mensagem, stacktrace=stacktrace)
 
 
-class Proibido(ApiApiClimaTempo):
+class Proibido(ApiClimaTempo):
     def __init__(self, mensagem: str = "Operação não permitida!", stacktrace: str = ""):
         super().__init__(status_code=403, mensagem=mensagem, stacktrace=stacktrace)
 
 
-class Falha(ApiApiClimaTempo):
+class Falha(ApiClimaTempo):
     def __init__(self, mensagem: str = "Operação não realizada!", stacktrace: str = ""):
         super().__init__(status_code=400, mensagem=mensagem, stacktrace=stacktrace)

@@ -3,7 +3,7 @@ from fastapi.exceptions import HTTPException, RequestValidationError
 from fastapi.responses import JSONResponse
 from loguru import logger
 
-from . import ApiApiClimaTempo
+from api_clima_tempo.exceptions import ApiClimaTempo
 
 
 def carregar_exception_api(app: FastAPI):
@@ -37,8 +37,8 @@ def carregar_exception_api(app: FastAPI):
             content={"status": 500, "mensagem": "Ocorreu um erro interno!",
                      "stacktrace": f"{type(exc).__name__}: {exc}"})
 
-    @app.exception_handler(ApiApiClimaTempo)
-    def exception_handler_api_api_clima_tempo(request: Request, exc: ApiApiClimaTempo):
+    @app.exception_handler(ApiClimaTempo)
+    def exception_handler_api_api_clima_tempo(request: Request, exc: ApiClimaTempo):
         logger.error(f"{type(exc).__name__}: {exc.stacktrace} | STACKTRACE: {exc.stacktrace}")
 
         return JSONResponse(

@@ -13,7 +13,7 @@ O projeto foi desenvolvido utilizando Celery com RabbitMQ para gerenciar as tare
 
 ## 🔌 Instalação da Aplicação
 ### Imagem Docker
-docker build -t scrapper_clima_tempo:0.2.0 .
+docker build -t scrapper_clima_tempo:0.3.0 .
 
 ### Pacote Python
 pip install .
@@ -43,7 +43,7 @@ celery -A scrapper_clima_tempo beat --loglevel=INFO
 ```
 #### Docker
 ```shell
-docker run --name beat_climatempo -e MONGO_USR=$MONGO_USR -e MONGO_PWD=$MONGO_PWD -e MONGO_HOST=$MONGO_HOST -e MONGO_PORT=$MONGO_PORT -e BROKER=$BROKER scrapper_clima_tempo:0.2.0 celery -A scrapper_clima_tempo beat --loglevel=INFO
+docker run --name beat_climatempo -e MONGO_USR=$MONGO_USR -e MONGO_PWD=$MONGO_PWD -e MONGO_HOST=$MONGO_HOST -e MONGO_PORT=$MONGO_PORT -e BROKER=$BROKER scrapper_clima_tempo:0.3.0 celery -A scrapper_clima_tempo beat --loglevel=INFO
 ```
 
 ### Worker Verificar Agendamento
@@ -52,7 +52,7 @@ celery -A scrapper_clima_tempo worker --concurrency=1 --loglevel=INFO -n schedul
 ```
 #### Docker
 ```shell
-docker run --name agendamento_climatempo -e MONGO_USR=$MONGO_USR -e MONGO_PWD=$MONGO_PWD -e MONGO_HOST=$MONGO_HOST -e MONGO_PORT=$MONGO_PORT -e BROKER=$BROKER scrapper_clima_tempo:0.2.0 celery -A scrapper_clima_tempo worker --concurrency=1 --loglevel=INFO -n scheduler@%h -Q climatempo_scheduler
+docker run --name agendamento_climatempo -e MONGO_USR=$MONGO_USR -e MONGO_PWD=$MONGO_PWD -e MONGO_HOST=$MONGO_HOST -e MONGO_PORT=$MONGO_PORT -e BROKER=$BROKER scrapper_clima_tempo:0.3.0 celery -A scrapper_clima_tempo worker --concurrency=1 --loglevel=INFO -n scheduler@%h -Q climatempo_scheduler
 ```
 
 ### Worker Scrapper
@@ -61,7 +61,7 @@ celery -A scrapper_clima_tempo worker --concurrency=8 --loglevel=INFO -n scrappe
 ```
 #### Docker
 ```shell
-docker run --name scrapper_climatempo -e MONGO_USR=$MONGO_USR -e MONGO_PWD=$MONGO_PWD -e MONGO_HOST=$MONGO_HOST -e MONGO_PORT=$MONGO_PORT -e BROKER=$BROKER scrapper_clima_tempo:0.2.0 celery -A scrapper_clima_tempo worker --concurrency=8 --loglevel=INFO -n scrapper@%h -Q climatempo_buscar_clima
+docker run --name scrapper_climatempo -e MONGO_USR=$MONGO_USR -e MONGO_PWD=$MONGO_PWD -e MONGO_HOST=$MONGO_HOST -e MONGO_PORT=$MONGO_PORT -e BROKER=$BROKER scrapper_clima_tempo:0.3.0 celery -A scrapper_clima_tempo worker --concurrency=8 --loglevel=INFO -n scrapper@%h -Q climatempo_buscar_clima
 ```
 
 ## 🛠️ Ferramentas Utilizadas

@@ -15,7 +15,7 @@ class ResultadoRetorno(__Status):
 
 
 class Paginacao(BaseModel):
-    anterior: int = Field(..., description="A partir de qual registro que começou o resultado anterior")
+    anterior: int = Field(None, description="A partir de qual registro que começou o resultado anterior")
     proximo: int = Field(None, description="A partir de qual registro começa a nova busca")
 
     class Config:
