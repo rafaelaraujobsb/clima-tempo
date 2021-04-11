@@ -1,18 +1,95 @@
 version: '3'
 
 services:
-  api_clima_tempo:
-    container_name: api_clima_tempo
-    build: .
-    image: api_clima_tempo:0.0.1
-    command: gunicorn -w 3 -b :8000 -k uvicorn.workers.UvicornWorker -t 90 --preload --max-requests=500 --reload api_clima_tempo:app
-    environment: []
-    ports: []
+  mongo:
+    image: mongo
+    container_name: dev-mongo
+    hostname: mongo
+    networks:
+      - clima-tempo-net
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: dev-rabbitmq-climatempo
+    hostname: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: climatempo
+      RABBITMQ_DEFAULT_PASS: climatempo
+    ports:
+      - 8080:15672
+    networks:
+      - clima-tempo-net
+
+  api:
+    container_name: dev-api-clima-tempo
+    build:
+      context: ./api
+    image: api_clima_tempo:0.4.0
+    command: gunicorn -w 2 -b :8080 -k uvicorn.workers.UvicornWorker -t 90 --preload --max-requests=500 --reload api_clima_tempo:app
+    environment:
+      MONGO_USR: ""
+      MONGO_PWD: ""
+      MONGO_HOST: "dev-mongo"
+    ports:
+      - 9080:8080
     volumes:
       - ./:/deploy
-    depends_on: []
-    networks: []
+    depends_on:
+      - mongo
+    networks:
+      - clima-tempo-net
+  
+  beat:
+    container_name: dev-beat-api-clima-tempo
+    build:
+      context: ./scrapper
+    image: scrapper_clima_tempo:0.3.0
+    command: celery -A scrapper_clima_tempo beat --loglevel=INFO
+    environment:
+      MONGO_USR: ""
+      MONGO_PWD: ""
+      MONGO_HOST: "dev-mongo"
+      BROKER: "amqp://climatempo:climatempo@dev-rabbitmq-climatempo:5672/"
+    depends_on:
+      - mongo
+      - rabbitmq
+    networks:
+      - clima-tempo-net
+  
+  worker-agendamento:
+    container_name: dev-worker-agendamento-api-clima-tempo
+    build:
+      context: ./scrapper
+    image: scrapper_clima_tempo:0.3.0
+    command: celery -A scrapper_clima_tempo worker --concurrency=1 --loglevel=INFO -n scheduler@%h -Q climatempo_scheduler
+    environment:
+      MONGO_USR: ""
+      MONGO_PWD: ""
+      MONGO_HOST: "dev-mongo"
+      BROKER: "amqp://climatempo:climatempo@dev-rabbitmq-climatempo:5672/"
+    depends_on:
+      - mongo
+      - rabbitmq
+    networks:
+      - clima-tempo-net
+  
+  worker-scrapper:
+    container_name: dev-worker-scrapper-api-clima-tempo
+    build:
+      context: ./scrapper
+    image: scrapper_clima_tempo:0.3.0
+    command: celery -A scrapper_clima_tempo worker --concurrency=8 --loglevel=INFO -n scrapper@%h -Q climatempo_buscar_clima
+    environment:
+      MONGO_USR: ""
+      MONGO_PWD: ""
+      MONGO_HOST: "dev-mongo"
+      BROKER: "amqp://climatempo:climatempo@dev-rabbitmq-climatempo:5672/"
+    depends_on:
+      - mongo
+      - rabbitmq
+    networks:
+      - clima-tempo-net
 
-volumes: []
-
-networks: []
+networks:
+  clima-tempo-net:
+    driver: bridge

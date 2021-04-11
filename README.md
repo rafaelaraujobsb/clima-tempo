@@ -1,26 +1,27 @@
-<div align="center"><h1>API Clima Tempo</h1></div>
-
+<div align="center"><h1>Projeto Scrapper Clima Tempo</h1></div>
 
 ## ✒️ Introdução
-N/A
+O projeto tem como objetivo extrair dados do site [Tempo Agora](https://www.tempoagora.com.br/) e disponibilizar informações sobre a extração através de uma API.
+Para mais detalhes de cada serviços acesse os links abaixo:
+- [API](./api)
+- [Scrapper](./scrapper)
+
 ## 🔌 Instalação da Aplicação
-N/A
+```
+docker-compose -f docker-compose.dev.yaml build --no-cache
+```
+
 ## ⚙️ Variáveis de ambiente
-| Nome | Descrição | Default |
-|-|-|-|
-|None|None|None|
+Acesse o README de cada serviço para verificar quais as variáveis são necessárias.
+- [API](./api)
+- [Scrapper](./scrapper)
+
+
 ## 📀 Iniciar Aplicação
-N/A
+```
+docker-compose -f docker-compose.dev.yaml up
+```
 
-## 🧪 Executar Testes
-N/A
-## 🛠️ Ferramentas Utilizadas
-<a href="https://docs.python.org/3.8/">Python3.8</a><br>
-<a href="https://fastapi.tiangolo.com/">FastAPI</a><br>
-<a href="https://gunicorn.org/">Gunicorn</a><br>
-<a href="https://github.com/Delgan/loguru">Loguru</a><br>
-<a href="https://pylama.readthedocs.io/en/latest/">Pylama</a><br>
-
-## 🧔 Responsáveis pelo projeto
+## 🧔 Responsável pelo projeto
 <p><a href="mailto:bsb.rafaelaraujo@gmail.com.br">Rafael Araujo</a></p>
 <div align="center"><img width="500" alt="Logo" src="https://s3.amazonaws.com/sample-login/companies/avatars/000/003/383/original/gaivota_logo_oficial.png?1541450807"></div>

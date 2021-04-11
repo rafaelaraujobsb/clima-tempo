@@ -18,7 +18,7 @@ task_routes = {
 beat_schedule = {
     f"buscar-clima-{envs.TS_SCHEDULE}m": {
         "task": "schedule.task_scheduler",
-        "schedule": envs.TS_SCHEDULE,
+        "schedule": envs.TS_SCHEDULE*60,
         "options": {
             "queue": "climatempo_scheduler"
         }
