@@ -74,4 +74,3 @@ docker run --name scrapper_climatempo -e MONGO_USR=$MONGO_USR -e MONGO_PWD=$MONG
 
 ## 🧔 Responsáveis pelo projeto
 <p><a href="mailto:bsb.rafaelaraujo@gmail.com.br">Rafael Araujo</a></p>
-<div align="center"><img width="500" alt="Logo" src="https://s3.amazonaws.com/sample-login/companies/avatars/000/003/383/original/gaivota_logo_oficial.png?1541450807"></div>
